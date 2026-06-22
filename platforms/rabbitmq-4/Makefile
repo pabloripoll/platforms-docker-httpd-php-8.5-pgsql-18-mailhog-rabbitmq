@@ -21,7 +21,7 @@ endif
 
 include ../../.env
 
-DOCKER_PLTF="RABBITMQ 4.2"
+DOCKER_PLTF="RABBITMQ 4+"
 DOCKER_LEAD=$(PROJECT_LEAD)
 DOCKER_CNET=$(PROJECT_CNET)
 DOCKER_HOST=$(PROJECT_HOST)
@@ -29,6 +29,7 @@ DOCKER_IMGK=$(BROKER_IMGK)
 DOCKER_PORT=$(BROKER_PORT)
 DOCKER_BIND=$(BROKER_BIND)
 DOCKER_CAAS=$(BROKER_CAAS)
+DOCKER_CPUS=$(MAILER_CAAS_CPUS)
 DOCKER_CAAS_MEM=$(BROKER_CAAS_MEM)
 DOCKER_CAAS_SWAP=$(BROKER_CAAS_SWAP)
 DOCKER_APP_PORT=$(BROKER_APP_PORT)
@@ -91,6 +92,7 @@ else
 	COMPOSE_PROJECT_PORT=$(DOCKER_PORT)\r\n\
 	COMPOSE_PROJECT_PATH=\"$(DOCKER_BIND)\"\r\n\
 	COMPOSE_PROJECT_NAME=\"$(DOCKER_CAAS)\"\r\n\
+	COMPOSE_PROJECT_CPUS=\"$(DOCKER_CPUS)\"\r\n\
 	COMPOSE_PROJECT_MEM=\"$(DOCKER_CAAS_MEM)\"\r\n\
 	COMPOSE_PROJECT_SWAP=\"$(DOCKER_CAAS_SWAP)\"\r\n\
 	COMPOSE_PROJECT_APP_PORT=\"$(DOCKER_APP_PORT)\"\r\n\
@@ -100,6 +102,7 @@ else
 	COMPOSE_PROJECT_APP_NODENAME=\"$(DOCKER_APP_NODENAME)\"" > ./docker/.env; \
 	echo ${C_BLU}"$(PROJECT_NAME)"${C_END}" MESSAGE BROKER "${C_YEL}$(DOCKER_PLTF)${C_END}" - "${C_YEL}"docker-compose.yml"${C_END}" .env file "${C_GRN}"has been set."${C_END};
 	echo ${C_BLU}"$(PROJECT_NAME)"${C_END}" MESSAGE BROKER "${C_YEL}$(DOCKER_PLTF)${C_END}" - Container: "${C_GRN}$(DOCKER_CONTAINER)${C_END}
+	echo ${C_BLU}"$(PROJECT_NAME)"${C_END}" MESSAGE BROKER "${C_YEL}$(DOCKER_PLTF)${C_END}" - Max. CPUs: "${C_GRN}$(DOCKER_CPUS)${C_END}
 	echo ${C_BLU}"$(PROJECT_NAME)"${C_END}" MESSAGE BROKER "${C_YEL}$(DOCKER_PLTF)${C_END}" - Max. memory usage: "${C_GRN}$(DOCKER_CAAS_MEM)${C_END}" - swap: "${C_GRN}$(DOCKER_CAAS_SWAP)${C_END}
 	echo ${C_BLU}"$(PROJECT_NAME)"${C_END}" MESSAGE BROKER "${C_YEL}$(DOCKER_PLTF)${C_END}" - AMQP is served at: http://"${C_GRN}$(word 1,$(shell hostname -I)):$(DOCKER_PORT)${C_END}
 	echo ${C_BLU}"$(PROJECT_NAME)"${C_END}" MESSAGE BROKER "${C_YEL}$(DOCKER_PLTF)${C_END}" - APP is served at: http://127.0.0.1:"${C_GRN}$(DOCKER_APP_PORT)${C_END}
@@ -115,6 +118,7 @@ info: ## shows container information
 	printf ${C_YEL}"Container ID.: "${C_END}; $(DOCKER) ps -aqf "name=^$(DOCKER_CONTAINER)$$"; printf "%s";
 	echo ${C_YEL}"Name.........: "${C_END}$(DOCKER_CONTAINER);
 	echo ${C_YEL}"Image........: "${C_END}"$(DOCKER_CONTAINER):$(DOCKER_IMGK)";
+	echo ${C_YEL}"CPUs.........: "${C_END}"$(DOCKER_CPUS)";
 	echo ${C_YEL}"Memory.......: "${C_END}"$(DOCKER_CAAS_MEM)";
 	echo ${C_YEL}"Host.........: "${C_END}"$(DOCKER_HOST):$(DOCKER_PORT)";
 	echo ${C_YEL}"Hostname.....: "${C_END}"$(word 1,$(shell hostname -I)):"$(DOCKER_PORT);

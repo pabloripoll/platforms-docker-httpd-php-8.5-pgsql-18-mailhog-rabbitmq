@@ -1,15 +1,17 @@
 services:
 
   mailer:
+    image: ${COMPOSE_PROJECT_IMGK}
+    pull_policy: never
     build:
       context: .
       dockerfile: Dockerfile
-    image: ${COMPOSE_PROJECT_IMGK}
     container_name: "${COMPOSE_PROJECT_LEAD}-${COMPOSE_PROJECT_NAME}"
     restart: unless-stopped
     deploy:
       resources:
         limits:
+          cpus: ${COMPOSE_PROJECT_CPUS}
           memory: ${COMPOSE_PROJECT_MEM} # On Docker Swarm, move resource limits into 'deploy.resources.limits'
     environment:
       - MH_SMTP_BIND_ADDR=0.0.0.0:1025

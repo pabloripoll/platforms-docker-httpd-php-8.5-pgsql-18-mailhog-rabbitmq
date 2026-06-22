@@ -2,7 +2,7 @@
     <img src="./../../resources/docs/images/pr-banner-long.png">
 </div>
 
-# RABBITMQ 4.2
+# MAILHOG
 
 - [./main](../../README.md)
 - [Features](#features)
@@ -10,23 +10,18 @@
 - [Management](#management)
 <br>
 
-## <a id="features"></a>Features
+## <a id="features"></a>Service Features
 
 ![Alpine Linux](https://img.shields.io/badge/Alpine_Linux-%230D597F.svg?style=for-the-badge&logo=alpine-linux&logoColor=white)
-![RabbitMQ](https://img.shields.io/badge/RabbitMQ-FF6600?style=for-the-badge&logo=rabbitmq&logoColor=white)
-
-RabbitMQ is a reliable and mature messaging and streaming broker, which is easy to deploy on cloud environments, on-premises, and on your local machine.
+![MailHog](https://img.shields.io/badge/Mailhog-EF4223?style=for-the-badge&logo=mailhog&logoColor=white)
 
 Content:
-- Linux Ubuntu 24.04
-- MariaDB 10.11
+- Linux Alpine version 3.12
+- MailHog 1.0.1
 <br><br>
 
 Sources:
-- [RabbitMQ: One broker to queue them all | RabbitMQ](https://www.rabbitmq.com/)
-- https://github.com/rabbitmq/rabbitmq-server
-- https://hub.docker.com/_/rabbitmq/
-- https://github.com/docker-library/rabbitmq/
+- https://github.com/mailhog/MailHog/releases
 <br><br>
 
 ## <a id="configuration"></a>Service Configuration
@@ -41,21 +36,18 @@ The service container can be easily manage by the `./docker/docker-compose.yml`.
 
 Require environment variables at `./docker/.env` *(all are customizable)*:
 ```bash
-COMPOSE_PROJECT_LEAD="myproj"                           # <- lead abbreviation or acronym as part of related containers naming rule -------------------------> #
-COMPOSE_PROJECT_CNET="rabbitmq_so"                      # <- real main image keys to manage automations for sharing resources -------------------------------> #
-COMPOSE_PROJECT_IMGK="alpine-3.22-rabbitmq-4.2"         # <- container name to build the service - it is important to set the environment in this variable --> #
-COMPOSE_PROJECT_HOST="127.0.0.1"                        # <- machine hostname referrer - not necessary for this project -------------------------------------> #
-COMPOSE_PROJECT_PORT=7502                               # <- local machine port opened for container service ------------------------------------------------> #
-COMPOSE_PROJECT_PATH="./rabbitmq_data"                  # <- platform broker data storage in local ----------------------------------------------------------> #
-COMPOSE_PROJECT_NAME="mp-rabbitmq-dev"                  # <- container name to build the service - it is important to set the environment in this variable --> #
-COMPOSE_PROJECT_MEM="128M"                              # <- container's maximum RAM usage to apply by docker-compose ---------------------------------------> #
-COMPOSE_PROJECT_SWAP="256M"                             # <- container's RAM swap space in storage executed by automation command ---------------------------> #
-COMPOSE_PROJECT_APP_PORT="7503"                         # <- application ui management port -----------------------------------------------------------------> #
-COMPOSE_PROJECT_APP_USER="guest"                        # <- application ui management user -----------------------------------------------------------------> #
-COMPOSE_PROJECT_APP_PASS="guest"                        # <- application ui management password -------------------------------------------------------------> #
-COMPOSE_PROJECT_APP_COOKIE="sucured-hash-string"        # <- application security ---------------------------------------------------------------------------> #
-COMPOSE_PROJECT_APP_NODENAME="rabbit@rabbitmq"          # <- application configuration ----------------------------------------------------------------------> #
+COMPOSE_PROJECT_LEAD="myproj"                       # <- lead abbreviation or acronym as part of related containers naming rule -------------------------> #
+COMPOSE_PROJECT_CNET="mp-dev"                       # <- real main image keys to manage automations for sharing resources -------------------------------> #
+COMPOSE_PROJECT_IMGK="alpine-3.22-mailhog"          # <- container name to build the service - it is important to set the environment in this variable --> #
+COMPOSE_PROJECT_HOST="127.0.0.1"                    # <- machine hostname referrer - not necessary for this project -------------------------------------> #
+COMPOSE_PROJECT_PORT=7504                           # <- local machine port opened for container service ------------------------------------------------> #
+COMPOSE_PROJECT_NAME="mp-mailhog-dev"               # <- container name to build the service - it is important to set the environment in this variable --> #
+COMPOSE_PROJECT_CPUS="2.00"                         # <- container's maximum CPUs usage to apply by docker-compose - leave it empty for full usage ------> #
+COMPOSE_PROJECT_MEM="128M"                          # <- container's maximum CPUs usage to apply by docker-compose - leave it empty for full usage ------> #
+COMPOSE_PROJECT_SWAP="256M"                         # <- container's RAM swap space in storage executed by automation command ---------------------------> #
+COMPOSE_PROJECT_APP_PORT=7505                       # <- application ui management port -----------------------------------------------------------------> #
 ```
+<br>
 
 ### Containers Access Modes
 

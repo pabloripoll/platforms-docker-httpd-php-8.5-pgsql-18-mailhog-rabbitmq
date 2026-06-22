@@ -28,8 +28,9 @@ DOCKER_HOST=$(PROJECT_HOST)
 DOCKER_IMGK=$(MAILER_IMGK)
 DOCKER_PORT=$(MAILER_PORT)
 DOCKER_CAAS=$(MAILER_CAAS)
-DOCKER_CAAS_MEM=$(MAILER_CAAS_MEM)
-DOCKER_CAAS_SWAP=$(MAILER_CAAS_SWAP)
+DOCKER_CPUS=$(MAILER_CAAS_CPUS)
+DOCKER_MEM=$(MAILER_CAAS_MEM)
+DOCKER_SWAP=$(MAILER_CAAS_SWAP)
 DOCKER_APP_PORT=$(MAILER_APP_PORT)
 
 ROOT_DIR=$(patsubst %/,%,$(dir $(realpath $(firstword $(MAKEFILE_LIST)))))
@@ -85,12 +86,14 @@ else
 	COMPOSE_PROJECT_HOST=\"$(DOCKER_HOST)\"\r\n\
 	COMPOSE_PROJECT_PORT=$(DOCKER_PORT)\r\n\
 	COMPOSE_PROJECT_NAME=\"$(DOCKER_CAAS)\"\r\n\
-	COMPOSE_PROJECT_MEM=\"$(DOCKER_CAAS_MEM)\"\r\n\
-	COMPOSE_PROJECT_SWAP=\"$(DOCKER_CAAS_SWAP)\"\r\n\
+	COMPOSE_PROJECT_CPUS=\"$(DOCKER_CPUS)\"\r\n\
+	COMPOSE_PROJECT_MEM=\"$(DOCKER_MEM)\"\r\n\
+	COMPOSE_PROJECT_SWAP=\"$(DOCKER_SWAP)\"\r\n\
 	COMPOSE_PROJECT_APP_PORT=\"$(DOCKER_APP_PORT)\"" > ./docker/.env; \
 	echo ${C_BLU}"$(PROJECT_NAME)"${C_END}" MAIL SERVICE "${C_YEL}$(DOCKER_PLTF)${C_END}" - "${C_YEL}"docker-compose.yml"${C_END}" .env file "${C_GRN}"has been set."${C_END};
 	echo ${C_BLU}"$(PROJECT_NAME)"${C_END}" MAIL SERVICE "${C_YEL}$(DOCKER_PLTF)${C_END}" - Container: "${C_GRN}$(DOCKER_CONTAINER)${C_END}
-	echo ${C_BLU}"$(PROJECT_NAME)"${C_END}" MAIL SERVICE "${C_YEL}$(DOCKER_PLTF)${C_END}" - Max. memory usage: "${C_GRN}$(DOCKER_CAAS_MEM)${C_END}" - swap: "${C_GRN}$(DOCKER_CAAS_SWAP)${C_END}
+	echo ${C_BLU}"$(PROJECT_NAME)"${C_END}" MAIL SERVICE "${C_YEL}$(DOCKER_PLTF)${C_END}" - Max. CPUs: "${C_GRN}$(DOCKER_CPUS)${C_END}
+	echo ${C_BLU}"$(PROJECT_NAME)"${C_END}" MAIL SERVICE "${C_YEL}$(DOCKER_PLTF)${C_END}" - Max. memory: "${C_GRN}$(DOCKER_MEM)${C_END}" - swap: "${C_GRN}$(DOCKER_SWAP)${C_END}
 	echo ${C_BLU}"$(PROJECT_NAME)"${C_END}" MAIL SERVICE "${C_YEL}$(DOCKER_PLTF)${C_END}" - SMTP is served at: http://"${C_GRN}$(word 1,$(shell hostname -I)):$(DOCKER_PORT)${C_END}
 	echo ${C_BLU}"$(PROJECT_NAME)"${C_END}" MAIL SERVICE "${C_YEL}$(DOCKER_PLTF)${C_END}" - APP/API is served at: http://127.0.0.1:"${C_GRN}$(DOCKER_APP_PORT)${C_END}
 endif
@@ -105,7 +108,8 @@ info: ## shows container information
 	printf ${C_YEL}"Container ID.: "${C_END}; $(DOCKER) ps -aqf "name=^$(DOCKER_CONTAINER)$$"; printf "%s";
 	echo ${C_YEL}"Name.........: "${C_END}$(DOCKER_CONTAINER);
 	echo ${C_YEL}"Image........: "${C_END}"$(DOCKER_CONTAINER):$(DOCKER_IMGK)";
-	echo ${C_YEL}"Memory.......: "${C_END}"$(DOCKER_CAAS_MEM)";
+	echo ${C_YEL}"CPUs.........: "${C_END}"$(DOCKER_CPUS)";
+	echo ${C_YEL}"Memory.......: "${C_END}"$(DOCKER_MEM)";
 	echo ${C_YEL}"Host.........: "${C_END}"$(DOCKER_HOST):$(DOCKER_PORT)";
 	echo ${C_YEL}"Hostname.....: "${C_END}"$(word 1,$(shell hostname -I)):"$(DOCKER_PORT);
 	printf ${C_YEL}"Docker.Host..: "${C_END};$(DOCKER) inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(DOCKER_CONTAINER);
