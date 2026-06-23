@@ -312,8 +312,9 @@ repo-flush: ## echoes clearing commands for git repository cache on local IDE an
 	echo ${C_YEL}"Clear repository for untracked files:"${C_END}
 	echo ${C_YEL}"$$"${C_END}" git rm -rf --cached .; git add .; git commit -m \"maint: cache cleared for untracked files\""
 	echo ""
-	echo ${C_YEL}"Platform repository against REST API repository:"${C_END}
-	echo ${C_YEL}"$$"${C_END}" git rm -r --cached -- \"apirest/*\" \":(exclude)apirest/.gitkeep\""
+	echo ${C_YEL}"Detach REST/GRPC API repository from platforms repository:"${C_END}
+	echo ${C_YEL}"$$"${C_END}" git rm -r --cached -- \"api-rest/*\" \":(exclude)api-rest/.gitkeep\""
+	echo ${C_YEL}"$$"${C_END}" git rm -r --cached -- \"api-grpc/*\" \":(exclude)api-grpc/.gitkeep\""
 
 repo-commit: ## echoes common git commands
 	echo ${C_YEL}"Common commiting commands:"${C_END}
