@@ -25,6 +25,17 @@ Content:
 - PHP Composer
 <br><br>
 
+Sources:
+- https://wiki.alpinelinux.org/wiki/Apache
+- https://wiki.alpinelinux.org/wiki/Apache_with_php-fpm
+- https://wiki.alpinelinux.org/wiki/Nginx_with_PHP#Nginx_with_PHP
+
+Once the container is built, you can list Apache installed modules
+```bash
+/var/www $ httpd -M
+```
+<br><br>
+
 It can be installed the most known **PHP** frameworks:
 
 ![Symfony](https://img.shields.io/badge/Symfony-000000?style=for-the-badge&logo=Symfony&logoColor=white)
