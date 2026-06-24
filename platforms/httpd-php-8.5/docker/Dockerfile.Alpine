@@ -72,19 +72,63 @@ RUN apk add --no-cache \
   php85-simplexml \
   # Databases
   php85-pdo \
+  ## SQLite
   php85-pdo_sqlite \
   php85-sqlite3 \
   # Postgres
   php85-pgsql \
   php85-pdo_pgsql \
-  postgresql-dev
-
-# pdo
-RUN docker-php-ext-install zip gd bcmath sockets pcntl pdo pdo_pgsql
-
-RUN apk add \
+  postgresql-dev \
+  ### Databases ###
+  php85-pdo \
+  ## SQLite
+  php85-pdo_sqlite \
+  php85-sqlite3 \
+  ## Mysql - Mariadb
+  #php85-pdo_mysql \
+  #php85-mysqlnd \
+  #php85-mysqli \
+  ## Postgre
+  php85-pgsql \
+  php85-pdo_pgsql \
+  postgresql-dev \
+  ## MongoDB
+  #php85-pecl-mongodb \
+  ## Redis
+  #php85-pecl-redis \
+  ## RabbitMQ
+  rabbitmq-c \
   php85-pecl-amqp
+  ## XDebug
   #php85-pecl-xdebug
+
+## PHP required extensions from Docker
+RUN docker-php-ext-install \
+  pdo \
+  #zip \
+  #gd \
+  #bcmath \
+  ## Mysql - Mariadb
+  #pdo_mysql \
+  ## Postgre
+  pdo_pgsql \
+  ## Sockets
+  sockets \
+  ## Process Control (jobs)
+  pcntl
+
+## If php85-pecl-amqp is not used, install amqp via PECL for clients that use the native ext-amqp like RabbitMQ
+#RUN set -eux; \
+#    apk add --no-cache --virtual .amqp-build-deps $PHPIZE_DEPS rabbitmq-c-dev; \
+#    pecl install amqp; \
+#    docker-php-ext-enable amqp; \
+#    php -m | grep -i amqp; \
+#    apk del .amqp-build-deps; \
+#    rm -rf /tmp/pear ~/.pearrc
+
+## If php85-pecl-mongodb is not used, install mongodb extension from PECL
+#RUN pecl install mongodb-2.1.0 \
+#    && docker-php-ext-enable mongodb
 
 # Configure Apache (httpd)
 COPY config/httpd/httpd.conf /etc/apache2/httpd.conf
